@@ -1,6 +1,5 @@
 import json
 import os
-import time
 from datetime import datetime
 from Models.SettingsModel import Language, Difficulty, Level
 
@@ -111,4 +110,4 @@ class RecordModel:
         if not records:
             return None
             
-        return max(records, key=lambda x: x["wpm"]) 
+        return max(records, key=lambda x: x["wpm"])

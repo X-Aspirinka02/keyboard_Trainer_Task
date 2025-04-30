@@ -1,7 +1,7 @@
 from Views.IView import IView
 import curses
-from wcwidth import wcswidth, wcwidth
-from typing import Any, Tuple, Optional
+from wcwidth import wcwidth
+from typing import Optional
 
 class ExerciseView(IView):
     """
@@ -15,8 +15,8 @@ class ExerciseView(IView):
     def _initialize_colors(self) -> None:
         """Устанавливает цвета для упражнения."""
         curses.start_color()
-        curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)   # правильное нажатие
-        curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK) # неправильное нажатие
+        curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_RED)   # правильное нажатие
+        curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_GREEN) # неправильное нажатие
         curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK) # инфа о рекордах
         
     def draw(self, window: curses.window) -> None:
