@@ -14,6 +14,7 @@ class RootPresenter:
     Управляющая структура над всеми презентерами. Координирующая взаимодействие между моделями и представлениями.
     Отвечает за обработку пользовательского ввода и обновление отображения.
     """
+
     def __init__(self, stdscr: curses.window):
         """
         Инициализирует структуру.
@@ -29,7 +30,7 @@ class RootPresenter:
                                             self.settings_model, self.record_model)
         self.list_presenter = ListPresenter(self.settings_model)
         self.record_presenter = RecordPresenter(stdscr, self.game_model,
-               self.settings_model, self.record_model)
+                                                self.settings_model, self.record_model)
 
         self._setup_terminal()
         self.list_presenter.show_language_selection()
@@ -38,7 +39,7 @@ class RootPresenter:
         """
         Настраивает параметры терминала для работы приложения.
         """
-        # куда-то во что-то общее
+
         curses.start_color()
         curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLUE)  # Для выделения выбранного элемента
@@ -52,7 +53,7 @@ class RootPresenter:
         Основной цикл работы презентера и программы.
         Обрабатывает пользовательский ввод и обновляет отображение.
         """
-        # куда-то во что-то общее
+
         curses.noecho()
         curses.cbreak()
         self.stdscr.clear()
@@ -73,7 +74,7 @@ class RootPresenter:
         Args:
             error_message: Сообщение об ошибке
         """
-        # куда-то во что-то общее
+
         self.stdscr.addstr(0, 0, f"Ошибка: {error_message}")
         self.stdscr.refresh()
         self.stdscr.getch()
@@ -82,7 +83,7 @@ class RootPresenter:
         """
         Обновляет состояние презентера и модели на основе пользовательского ввода.
         """
-        # куда-то во что-то общее
+
         key = self.stdscr.getch()
 
         if self.list_presenter.current_view is not None:
@@ -95,10 +96,10 @@ class RootPresenter:
         Args:
             key: Код нажатой клавиши
         """
-        # куда-то во что-то общее
+
         if isinstance(self.list_presenter.current_view, ListView):
             self.handle_list_view_input(key)
-            if  key == ord('h'):  # Добавляем возможность просмотра истории результатов
+            if key == ord('h'):  # Добавляем возможность просмотра истории результатов
                 self.record_presenter.show_records_history()
                 # Полностью перерисовываем экран
                 self.stdscr.clear()
@@ -113,7 +114,7 @@ class RootPresenter:
         Args:
             key: Код нажатой клавиши
         """
-        # listPresenter
+
         if key == curses.KEY_DOWN:
             self.settings_model.select_next_item()
             self.list_presenter.current_view.update_selected_item(self.settings_model.current_selected_item)
@@ -127,7 +128,7 @@ class RootPresenter:
         """
         Обрабатывает выбор пользователя в текущем представлении.
         """
-        # List presenter
+
         match self.list_presenter.current_view_type:
             case "language":
                 self.settings_model.set_language()
@@ -143,7 +144,7 @@ class RootPresenter:
         """
         Отрисовывает текущее представление.
         """
-        # куда-то во что-то общее
+
         self.stdscr.clear()
         if self.list_presenter.current_view is not None:
             self.list_presenter.current_view.draw(self.stdscr)
@@ -153,7 +154,7 @@ class RootPresenter:
         """
         Возвращает терминал в стандартное состояние.
         """
-        # куда-то во что-то общее
+
         curses.nocbreak()
         self.stdscr.keypad(False)
         curses.echo()

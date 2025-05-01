@@ -7,16 +7,16 @@ from Models.SettingsModel import SettingsModel
 
 class RecordPresenter:
     """
-    Презентер для рекордов
+    Презентер для рекордов. Отвечает за управление отображениями рекордов.
     """
+
     def __init__(self, stdscr: curses.window, game_model: GameModel,
-               settings_model: SettingsModel, record_model: RecordModel):
+                 settings_model: SettingsModel, record_model: RecordModel):
         self.record_model = record_model
         self.stdscr = stdscr
         self.game_model = game_model
         self.settings_model = settings_model
         self.current_result = {}
-
 
     def save_exercise_record(self, elapsed_time: float):
         """
@@ -25,7 +25,7 @@ class RecordPresenter:
         Args:
             elapsed_time: Время выполнения упражнения
         """
-        # record
+
         chars_typed = self.game_model.current_position
         total_chars = len(self.game_model.text)
         correct_keystrokes = self.game_model.correct_keystrokes
@@ -67,7 +67,7 @@ class RecordPresenter:
         """
         Отображает историю результатов упражнений с возможностью прокрутки.
         """
-        # record
+
         # Увеличиваем количество записей для отображения
         records = self.record_model.get_last_records(30)
         records_view = RecordsView(records)

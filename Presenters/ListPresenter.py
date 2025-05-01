@@ -1,16 +1,16 @@
 from Models.SettingsModel import Language, Difficulty, Level, SettingsModel
 from Views.ListView import ListView
 
+
 class ListPresenter:
     """
-    Презентер отображения списка.
+    Презентер отображения списка. Отвечает за управление отображениями всех списков настроек.
     """
-    def __init__(self,settings_model: SettingsModel):
+
+    def __init__(self, settings_model: SettingsModel):
         self.settings_model = settings_model
         self.current_view = None
         self.current_view_type = None
-
-
 
     def _create_selection_view(self, items, header, view_type):
         """
@@ -29,12 +29,11 @@ class ListPresenter:
 
         self.current_view.update_selected_item(0)
 
-
     def show_language_selection(self):
         """
         Отображает экран выбора языка.
         """
-        # list
+
         languages = [(f"{lang.name}", 1) for lang in Language]
         self._create_selection_view(languages, "Выберите язык, на котором хотите писать", "language")
 
@@ -42,7 +41,7 @@ class ListPresenter:
         """
         Отображает экран выбора сложности.
         """
-        # list
+
         difficulties = [(f"{diff.name}", 1) for diff in Difficulty]
         self._create_selection_view(difficulties, "Выберите сложность", "difficulty")
 
@@ -50,6 +49,6 @@ class ListPresenter:
         """
         Отображает экран выбора уровня.
         """
-        # list
+
         levels = [(f"Level {level.value}", 1) for level in Level]
         self._create_selection_view(levels, "Выберите уровень", "level")
