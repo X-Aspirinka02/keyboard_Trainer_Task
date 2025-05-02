@@ -24,7 +24,7 @@ class ExerciseView(IView):
         Отрисовывает начальный экран
         
         Args:
-            window: окно из библиотеки curses, где отрисовывать
+            window: окно из библиотеки curses, где отрисовывать.
         """
         max_y, max_x = window.getmaxyx()
         window.clear()
@@ -83,7 +83,7 @@ class ExerciseView(IView):
             for passed_char in passed_text:
                 window.addstr(0, passed_count, passed_char)
                 passed_count += wcwidth(passed_char)
-            #window.addstr(0, 0, passed_text)
+
 
 
             passed_width = 0

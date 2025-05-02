@@ -3,6 +3,9 @@ class GameModel:
     Модель клавиатурного тренажера, отслеживающая состояние упражнения и статистику.
     """
     def __init__(self):
+        """
+        Инициализирует игровую модель.
+        """
         self._text = ""
         self._correct_keystrokes = 0
         self._exercise_time_seconds = 60
@@ -50,6 +53,11 @@ class GameModel:
         self.set_exercise_text(text)
         
     def set_exercise_time(self, seconds: int) -> None:
+        """
+        Устанавливает таймер для упражнения.
+        :param seconds: Сколько времени будет проходить упражнение
+        :return: Сколько времени будет проходить упражнение
+        """
         self._exercise_time_seconds = seconds
         
     def _reset(self) -> None:

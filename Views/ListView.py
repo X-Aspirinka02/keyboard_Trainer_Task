@@ -30,6 +30,7 @@ class ListView(IView):
         
         if self.view_type == "language":
             window.addstr(y_pos + 1, 0, "Press 'h' to view exercise history", curses.color_pair(3))
+            window.addstr(y_pos + 2, 0, "Press 't' to start the tournament", curses.color_pair(3))
             
         window.refresh()
 
