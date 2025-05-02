@@ -50,5 +50,6 @@ class ListPresenter:
         Отображает экран выбора уровня.
         """
 
-        levels = [(f"Level {level.value}", 1) for level in Level]
+        levels = [(f"Level {level.value}", 1) for level in list(Level)[:-1]]
+        levels.append((f"Big Text", 1))
         self._create_selection_view(levels, "Выберите уровень", "level")

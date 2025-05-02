@@ -18,21 +18,19 @@ class RecordPresenter:
         self.settings_model = settings_model
         self.current_result = {}
 
-    def save_exercise_record(self, elapsed_time: float):
+    def save_exercise_record(self, current_result: dict):
         """
         Сохраняет результат упражнения в историю.
 
-        Args:
-            elapsed_time: Время выполнения упражнения
         """
 
         chars_typed = self.game_model.current_position
         total_chars = len(self.game_model.text)
-        correct_keystrokes = self.game_model.correct_keystrokes
+        correct_keystrokes = current_result['correct_keystrokes']
 
         # Расчет метрик
-        accuracy = (correct_keystrokes / chars_typed) * 100 if chars_typed > 0 else 0
-        wpm = (chars_typed / 5) / (elapsed_time / 60) if elapsed_time > 0 else 0
+        accuracy = current_result['accuracy']
+        wpm = current_result['wpm']
 
         # Проверка, является ли это лучшим результатом
         previous_best = self.record_model.get_best_record(
@@ -51,7 +49,11 @@ class RecordPresenter:
             'accuracy': accuracy,
             'is_best_record': is_best_record
         }
+        self.save_record(chars_typed, total_chars, correct_keystrokes, current_result['elapsed_time'])
+        return is_best_record
 
+
+    def save_record(self, chars_typed, total_chars, correct_keystrokes, elapsed_time):
         # Сохраняем результат
         self.record_model.save_record(
             language=self.settings_model.current_language,

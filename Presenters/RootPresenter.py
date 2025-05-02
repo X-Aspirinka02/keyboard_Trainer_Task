@@ -3,7 +3,6 @@ import curses
 from Models.GameModel import GameModel
 from Models.RecordModel import RecordModel
 from Models.SettingsModel import SettingsModel
-from Models.TournamentModel import TournamentModel
 from Presenters.ListPresenter import ListPresenter
 from Presenters.RecordPresenter import RecordPresenter
 from Presenters.GamePresenter import GamePresenter
@@ -27,12 +26,14 @@ class RootPresenter:
         self.settings_model = SettingsModel()
         self.game_model = GameModel()
         self.record_model = RecordModel()
-        self.tournament_model = TournamentModel()
+        self.tournament_model = None
 
         self.game_presenter = GamePresenter(stdscr, self.game_model,
                                             self.settings_model, self.record_model)
+
         self.list_presenter = ListPresenter(self.settings_model)
-        self.tournament_presenter = TournamentPresenter(stdscr, self.tournament_model)
+        self.tournament_presenter = TournamentPresenter(stdscr)
+
         self.record_presenter = RecordPresenter(stdscr, self.game_model,
                                                 self.settings_model, self.record_model)
 
@@ -105,8 +106,6 @@ class RootPresenter:
             self.handle_list_view_input(key)
             if key == ord('h'):  # Добавляем возможность просмотра истории результатов
                 self.record_presenter.show_records_history()
-            elif key == ord('t'):  # Добавляем возможность начать турнир
-                self.tournament_presenter.show_tournament_begin()
                 # Полностью перерисовываем экран
                 self.stdscr.clear()
                 if self.list_presenter.current_view is not None:
@@ -127,10 +126,10 @@ class RootPresenter:
         elif key == curses.KEY_UP:
             self.settings_model.select_prev_item()
             self.list_presenter.current_view.update_selected_item(self.settings_model.current_selected_item)
-        elif key in [curses.KEY_ENTER, 10, 13]:
-            self.handle_selection()
+        elif key in [curses.KEY_ENTER, 10, 13] or key == ord('t'):
+            self.handle_selection(key)
 
-    def handle_selection(self):
+    def handle_selection(self, key):
         """
         Обрабатывает выбор пользователя в текущем представлении.
         """
@@ -143,8 +142,16 @@ class RootPresenter:
                 self.list_presenter.settings_model.set_difficulty()
                 self.list_presenter.show_level_selection()
             case "level":
-                self.settings_model.set_level()
-                self.game_presenter.start_game(self.list_presenter, self.record_presenter)
+                if key == ord('t'):  # Добавляем возможность начать турнир
+                    self.tournament_presenter.show_tournament_begin(self.list_presenter.settings_model)
+
+                elif key in [curses.KEY_ENTER, 10, 13]:
+                    self.settings_model.set_level()
+                    #TODO очень плохо закидывать старт в переменную
+                    current_result = self.game_presenter.start_game()
+                    is_best = self.record_presenter.save_exercise_record(current_result)
+                    self.game_presenter._show_exercise_results(is_best)
+                self.list_presenter.show_language_selection()
 
     def _draw(self):
         """
