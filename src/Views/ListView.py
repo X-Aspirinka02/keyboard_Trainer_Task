@@ -1,9 +1,10 @@
-from Views.IView import IView
+from src.Views.IView import IView
 import curses
 
 
 class ListView(IView):
-    def __init__(self, items_for_choice: list[tuple[str, int]], header: str, view_type: str = None):
+    def __init__(self, items_for_choice: list[tuple[str, int]],
+                 header: str, view_type: str = None):
         self.items = items_for_choice
         self.header = header
         self.view_type = view_type
@@ -26,11 +27,23 @@ class ListView(IView):
                 window.addstr(y_coor, 0, text, curses.color_pair(1))
 
         y_pos = len(self.items) + 2
-        window.addstr(y_pos, 0, "Use UP/DOWN arrows to navigate, ENTER to select")
-        
+        window.addstr(y_pos, 0,
+                      "Используйте UP/DOWN для перемещения, ENTER для выбора")
+
         if self.view_type == "language":
-            window.addstr(y_pos + 1, 0, "Press 'h' to view exercise history", curses.color_pair(3))
-            
+            window.addstr(y_pos + 1,
+                          0, "Нажмите 'h' чтобы увидеть историю рекордов.",
+                          curses.color_pair(3))
+            window.addstr(y_pos + 3,
+                          0,
+                          """Если вы хотите провести турнир,""" +
+                          """ тогда выберите язык и сложность турнира,
+далее нажмите 't' в секции выбора уровня.""", curses.color_pair(3))
+        if self.view_type == "level":
+            window.addstr(y_pos + 1, 0,
+                          "Если вы хотите провести турнир, нажмите 't'",
+                          curses.color_pair(3))
+
         window.refresh()
 
     def update_selected_item(self, selected_index):
