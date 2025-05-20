@@ -4,7 +4,7 @@ from src.Models.SettingsModel import SettingsModel
 from src.Models.tournament.TournamentTable import TournamentTable
 
 
-class TournamentTableTest(unittest.TestCase):
+class TestTournamentTable(unittest.TestCase):
     def setUp(self):
         self.test_gamers = ["player1", "player2", "player3", "player4"]
         self.test_settings_model = SettingsModel()

@@ -2,7 +2,7 @@ import unittest
 from src.Models.GameModel import GameModel
 
 
-class GameModelTest(unittest.TestCase):
+class TestGameModel(unittest.TestCase):
 
     def setUp(self):
         self.test_game_model = GameModel()

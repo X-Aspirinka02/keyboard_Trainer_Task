@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 from src.Presenters.GamePresenter import GamePresenter
 
 
-class TestGamePresenterRunExercise(unittest.TestCase):
+class TestGamePresenter(unittest.TestCase):
     def setUp(self):
         self.mock_stdscr = MagicMock()
         self.mock_game_model = MagicMock()
