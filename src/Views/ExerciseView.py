@@ -1,7 +1,6 @@
 from src.Views.IView import IView
 import curses
 from src.Views.TextOutput import draw_text_with_wrap
-from wcwidth import wcwidth
 from typing import Optional
 
 
@@ -95,7 +94,7 @@ class ExerciseView(IView):
         max_y, max_x = window.getmaxyx()
 
         for char in passed_text:
-            if char == '\n' or x + wcwidth(char) >= max_x:
+            if char == '\n' or x + 2 >= max_x:
                 y += 1
                 x = 0
                 if char == '\n':
@@ -106,7 +105,7 @@ class ExerciseView(IView):
             x += 1
 
         if current_char:
-            if current_char == '\n' or x + wcwidth(current_char) >= max_x:
+            if current_char == '\n' or x + 2 >= max_x:
                 y += 1
                 x = 0
                 if current_char != '\n':
@@ -122,7 +121,7 @@ class ExerciseView(IView):
             window.clrtoeol()
 
         for char in remaining_text:
-            if char == '\n' or x + wcwidth(char) >= max_x:
+            if char == '\n' or x + 2 >= max_x:
                 y += 1
                 x = 0
                 window.move(y, 0)
