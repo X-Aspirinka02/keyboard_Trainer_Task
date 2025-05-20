@@ -78,7 +78,6 @@ class RootPresenter:
     def _show_error(self, error_message: str):
         """
         Отображает сообщение об ошибке.
-
         Args:
             error_message: Сообщение об ошибке
         """
