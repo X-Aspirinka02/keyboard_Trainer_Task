@@ -1,7 +1,6 @@
 import curses
-from Presenters.RootPresenter import RootPresenter
+from src.Presenters.RootPresenter import RootPresenter
 import locale
-
 
 
 def main(stdscr: curses.window):
@@ -9,5 +8,6 @@ def main(stdscr: curses.window):
     locale.setlocale(locale.LC_ALL, 'zh_CN.UTF-8')
     root_presenter = RootPresenter(stdscr)
     root_presenter.run()
+
 
 curses.wrapper(main)

@@ -174,6 +174,41 @@
             "correct_keystrokes": 0,
             "uniformity_score": 27,
             "name": "2"
+        },
+        {
+            "language": "English",
+            "difficulty": "simple",
+            "correct_keystrokes": 102,
+            "uniformity_score": 19,
+            "name": "3"
+        },
+        {
+            "language": "Chinese",
+            "difficulty": "simple",
+            "correct_keystrokes": 0,
+            "uniformity_score": 15,
+            "name": "no"
+        },
+        {
+            "language": "English",
+            "difficulty": "simple",
+            "correct_keystrokes": 102,
+            "uniformity_score": 62,
+            "name": "s"
+        },
+        {
+            "language": "English",
+            "difficulty": "simple",
+            "correct_keystrokes": 0,
+            "uniformity_score": 100,
+            "name": "f"
+        },
+        {
+            "language": "Chinese",
+            "difficulty": "simple",
+            "correct_keystrokes": 0,
+            "uniformity_score": 100,
+            "name": "d"
         }
     ]
 }

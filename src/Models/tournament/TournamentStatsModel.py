@@ -1,7 +1,6 @@
 import json
 import os
-from datetime import datetime
-from Models.SettingsModel import Language, Difficulty, Level
+from src.Models.SettingsModel import Language, Difficulty
 
 
 class TournamentStatsModel:
@@ -28,8 +27,11 @@ class TournamentStatsModel:
                 return {"stats": []}
         return {"stats": []}
 
-    def save_stat(self, language: Language, difficulty: Difficulty, name: bytes, correct_keystrokes: int, uniformity_score: int):
-
+    def save_stat(self, language: Language, difficulty: Difficulty,
+                  name: bytes, correct_keystrokes: int, uniformity_score: int):
+        """
+        Сохранение победителей.
+        """
 
         record = {
             "language": language.name,
@@ -50,6 +52,10 @@ class TournamentStatsModel:
             json.dump(self.stats, f, indent=4, ensure_ascii=False)
 
     def get_last_records(self, count=5):
+        """
+        Взять последние count рекордов турнира.
+        :param count: Количество записей.
+        :return: Count записей
+        """
 
-        # Возвращаем последние count записей
         return self.stats['stats'][-count:]

@@ -1,6 +1,6 @@
 import curses
 
-from Views.IView import IView
+from src.Views.IView import IView
 
 
 class TournamentView(IView):
@@ -8,27 +8,24 @@ class TournamentView(IView):
     def __init__(self):
         self.init_colors()
 
-
     def init_colors(self):
         curses.start_color()
-        curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)  # Обычный текст
+        curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
         curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
         curses.init_pair(4, curses.COLOR_RED, curses.COLOR_BLACK)
-
 
     def show_init_gamer(self, window: curses.window, gamer_count: int):
         curses.echo()
         gamers = []
         for gamer in range(0, gamer_count):
             window.clear()
-            window.addstr(0, 0, f"Введите имя игрока {gamer}", curses.color_pair(1))
+            window.addstr(0, 0,
+                          f"Введите имя игрока {gamer}", curses.color_pair(1))
             window.move(2, 0)
             game_name = window.getstr()
             gamers.append(game_name)
         return gamers
-
-
 
     def draw(self, window: curses.window):
         """
@@ -44,11 +41,16 @@ class TournamentView(IView):
 
             window.clear()
             window.addstr(0, 0, "Начните турнир!", curses.color_pair(3))
-            window.addstr(1, 0, "Введите количество игроков, которые будут участвовать в турнире.", curses.color_pair(3))
+            window.addstr(1, 0,
+                          "Введите количество игроков, " +
+                          "которые будут участвовать в турнире.",
+                          curses.color_pair(3))
             window.addstr(3, 0, "Выход: Q")
             window.addstr(4, 0, "Конец ввода: ENTER")
             if incorrect_input:
-                window.addstr(5, 0, "Некорректный ввод, введите еще раз.", curses.color_pair(4))
+                window.addstr(5, 0,
+                              "Некорректный ввод, введите еще раз.",
+                              curses.color_pair(4))
             window.move(2, 0)
 
             key = window.getstr()
@@ -71,21 +73,20 @@ class TournamentView(IView):
 
         window.refresh()
 
-
-    def show_vs(self, window: curses.window,  gamer1: bytes, gamer2: bytes):
+    def show_vs(self, window: curses.window, gamer1: bytes, gamer2: bytes):
         window.clear()
-        window.addstr(0, 0, f"{gamer1.decode("utf-8")} vs {gamer2.decode("utf-8")}", curses.color_pair(4))
+        window.addstr(0, 0, f"{gamer1.decode("utf-8")}" +
+                      f" vs {gamer2.decode("utf-8")}", curses.color_pair(4))
         window.refresh()
-        window.getch()
-
 
     def show_start(self, window: curses.window):
         window.clear()
         window.addstr(0, 0, "НАЧИНАЕМ ТУРНИР!", curses.color_pair(3))
-        window.addstr(1, 0, "Нажмите любую клавишу, чтобы начать . . .", curses.color_pair(1))
+        window.addstr(1, 0,
+                      "Нажмите любую клавишу, чтобы начать . . .",
+                      curses.color_pair(1))
         window.refresh()
         window.getch()
-
 
     def show_winer(self, stdscr: curses.window, winner: bytes):
         stdscr.clear()
@@ -106,7 +107,3 @@ class TournamentView(IView):
             return True
         else:
             return False
-
-
-
-

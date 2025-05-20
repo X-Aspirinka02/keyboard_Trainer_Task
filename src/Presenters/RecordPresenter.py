@@ -1,8 +1,8 @@
-from Models.RecordModel import RecordModel
+from src.Models.RecordModel import RecordModel
 import curses
-from Views.RecordsView import RecordsView
-from Models.GameModel import GameModel
-from Models.SettingsModel import SettingsModel
+from src.Views.RecordsView import RecordsView
+from src.Models.GameModel import GameModel
+from src.Models.SettingsModel import SettingsModel
 
 
 class RecordPresenter:
@@ -18,10 +18,9 @@ class RecordPresenter:
         self.settings_model = settings_model
         self.current_result = {}
 
-    def save_exercise_record(self, current_result: dict):
+    def save_exercise_rec(self, current_result: dict):
         """
         Сохраняет результат упражнения в историю.
-
         """
 
         chars_typed = self.game_model.current_position
@@ -49,11 +48,12 @@ class RecordPresenter:
             'accuracy': accuracy,
             'is_best_record': is_best_record
         }
-        self.save_record(chars_typed, total_chars, correct_keystrokes, current_result['elapsed_time'])
+        self.save_record(chars_typed, total_chars,
+                         correct_keystrokes, current_result['elapsed_time'])
         return is_best_record
 
-
-    def save_record(self, chars_typed, total_chars, correct_keystrokes, elapsed_time):
+    def save_record(self, chars_typed, total_chars,
+                    correct_keystrokes, elapsed_time):
         # Сохраняем результат
         self.record_model.save_record(
             language=self.settings_model.current_language,

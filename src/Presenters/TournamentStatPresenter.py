@@ -1,10 +1,9 @@
-
 import curses
 
-from Models.tournament.TournamentModel import TournamentStatsModel
-from Models.GameModel import GameModel
-from Models.SettingsModel import SettingsModel, Language, Difficulty
-from Views.TournamentStatsView import TournamentStatsView
+from src.Models.tournament.TournamentStatsModel import TournamentStatsModel
+from src.Models.GameModel import GameModel
+from src.Models.SettingsModel import SettingsModel, Language, Difficulty
+from src.Views.TournamentStatsView import TournamentStatsView
 
 
 class TournamentStatPresenter:
@@ -13,14 +12,17 @@ class TournamentStatPresenter:
     """
 
     def __init__(self, stdscr: curses.window, game_model: GameModel,
-                 settings_model: SettingsModel, stat_model: TournamentStatsModel):
+                 settings_model: SettingsModel,
+                 stat_model: TournamentStatsModel):
         self.stat_model = stat_model
         self.stdscr = stdscr
         self.game_model = game_model
         self.settings_model = settings_model
         self.current_result = {}
 
-    def save_winner(self, language: Language, difficulty: Difficulty, name: bytes, current_result: dict):
+    def save_winner(self, language: Language,
+                    difficulty: Difficulty,
+                    name: bytes, current_result: dict):
         """
         Сохраняет результат упражнения в историю.
 
@@ -39,7 +41,6 @@ class TournamentStatPresenter:
             'name': name
         }
         self.save_stat(correct_keystrokes, uniformity_score, name)
-
 
     def save_stat(self, correct_keystrokes, uniformity_score, name: bytes):
         # Сохраняем результат

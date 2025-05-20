@@ -7,10 +7,12 @@ class Difficulty(enum.Enum):
     middle = 1
     hard = 2
 
+
 class Language(enum.Enum):
     English = 0
     Russian = 1
     Chinese = 2
+
 
 class Level(enum.Enum):
     l1 = 0
@@ -26,6 +28,7 @@ LANGUAGE_HEADER = "Выберете язык, на котором вы хоти�
 DIFFICULTY_HEADER = "Выберете сложность"
 LEVEL_HEADER = "Выберете уровень"
 
+
 class SettingsModel:
     def __init__(self):
         self.current_language = Language.English
@@ -39,16 +42,19 @@ class SettingsModel:
         """Устанавливает случайный уровень."""
         level = random.choice([Level.l1, Level.l5])
         self.current_level = level
+
     def set_big_text_level(self):
         self.current_level = Level.big_text
 
     def select_next_item(self):
         if self.items_count > 0:
-            self.current_selected_item = (self.current_selected_item + 1) % self.items_count
+            self.current_selected_item = (self.current_selected_item +
+                                          1) % self.items_count
 
     def select_prev_item(self):
         if self.items_count > 0:
-            self.current_selected_item = (self.current_selected_item - 1) % self.items_count
+            self.current_selected_item = ((self.current_selected_item - 1)
+                                          % self.items_count)
 
     def set_language(self):
         self.current_language = Language(self.current_selected_item)

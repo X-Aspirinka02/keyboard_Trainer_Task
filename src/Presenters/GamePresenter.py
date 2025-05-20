@@ -1,10 +1,10 @@
 import curses
 import time
-from Models.SettingsModel import SettingsModel
-from Models.ExerciseModel import ExerciseModel
-from Models.GameModel import GameModel
-from Models.RecordModel import RecordModel
-from Views.ExerciseView import ExerciseView
+from src.Models.SettingsModel import SettingsModel
+from src.Models.ExerciseModel import ExerciseModel
+from src.Models.GameModel import GameModel
+from src.Models.RecordModel import RecordModel
+from src.Views.ExerciseView import ExerciseView
 
 
 class GamePresenter:
@@ -13,10 +13,11 @@ class GamePresenter:
     """
 
     def __init__(self, stdscr: curses.window, game_model: GameModel,
-                 settings_model: SettingsModel, record_model: RecordModel = None):
+                 settings_model: SettingsModel,
+                 record_model: RecordModel = None):
         """
         Инициализация презентера игры.
-        
+
         Args:
             stdscr: Окно curses для отображения интерфейса
         """
@@ -37,8 +38,6 @@ class GamePresenter:
 
         self._initialize_exercise()
         return self._run_exercise()
-
-
 
     def _initialize_exercise(self):
         """
@@ -76,7 +75,6 @@ class GamePresenter:
         keystroke_intervals = []
         avg_deviation = 0
 
-
         self.exercise_view.draw(self.stdscr)
         self.stdscr.getch()
 
@@ -96,7 +94,7 @@ class GamePresenter:
                 break
 
             if self.game_model.is_completed:
-                #self._show_exercise_completion()
+                # self._show_exercise_completion()
                 break
 
             current_time = time.time()
@@ -123,23 +121,27 @@ class GamePresenter:
         correct_keystrokes = self.game_model.correct_keystrokes
 
         # Расчет метрик
-        accuracy = (correct_keystrokes / chars_typed) * 100 if chars_typed > 0 else 0
-        wpm = (chars_typed / 5) / (elapsed_time / 60) if elapsed_time > 0 else 0
-
+        accuracy = (correct_keystrokes /
+                    chars_typed) * 100 if chars_typed > 0 else 0
+        wpm = ((chars_typed / 5)
+               / (elapsed_time / 60)) if elapsed_time > 0 else 0
 
         deviation_score = 0
         if len(keystroke_intervals) > 0:
+            ideal_interval = (elapsed_time /
+                              chars_typed) if chars_typed > 0 else 0
 
-            ideal_interval = elapsed_time / chars_typed if chars_typed > 0 else 0
+            deviations = [abs(interval -
+                              ideal_interval)
+                          for interval in keystroke_intervals]
 
+            avg_deviation = (sum(deviations) /
+                             len(deviations)) \
+                if len(deviations) > 0 else 0
 
-            deviations = [abs(interval - ideal_interval) for interval in keystroke_intervals]
-
-
-            avg_deviation = sum(deviations) / len(deviations) if len(deviations) > 0 else 0
-
-
-            deviation_score = min(100, int(avg_deviation / ideal_interval * 100)) if ideal_interval > 0 else 0
+            deviation_score = min(100, int(avg_deviation /
+                                           ideal_interval * 100)) \
+                if ideal_interval > 0 else 0
 
         self.current_result = {
             'wpm': wpm,
@@ -163,13 +165,15 @@ class GamePresenter:
         )
         self.stdscr.getch()
 
-    def _show_exercise_results(self, is_best: bool):
+    def show_exercise_results(self, is_best: bool):
         """
         Отображает экран с результатами упражнения.
         """
 
-        wpm = self.current_result['wpm'] if hasattr(self, 'current_result') else 0
-        accuracy = self.current_result['accuracy'] if hasattr(self, 'current_result') else 0
+        wpm = self.current_result['wpm'] \
+            if hasattr(self, 'current_result') else 0
+        accuracy = self.current_result['accuracy'] if\
+            hasattr(self, 'current_result') else 0
         is_best_record = is_best
 
         self.exercise_view.show_results_screen(
