@@ -1520,6 +1520,32 @@
             "wpm": 57.59,
             "time_elapsed": 5.0,
             "completed": false
+        },
+        {
+            "timestamp": "2025-05-20 23:41:44",
+            "language": "English",
+            "difficulty": "simple",
+            "level": "Level 0",
+            "chars_typed": 90,
+            "total_chars": 93,
+            "correct_keystrokes": 19,
+            "accuracy": 21.11,
+            "wpm": 215.89,
+            "time_elapsed": 5.0,
+            "completed": false
+        },
+        {
+            "timestamp": "2025-05-20 23:41:54",
+            "language": "Chinese",
+            "difficulty": "simple",
+            "level": "Level 5",
+            "chars_typed": 119,
+            "total_chars": 227,
+            "correct_keystrokes": 0,
+            "accuracy": 0.0,
+            "wpm": 284.78,
+            "time_elapsed": 5.01,
+            "completed": false
         }
     ]
 }
